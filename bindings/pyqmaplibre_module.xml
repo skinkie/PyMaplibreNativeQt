@@ -1,0 +1,8 @@
+<typesystem package="pyqmaplibre">
+    <load-typesystem name="typesystem_openglwidgets.xml" />
+    <namespace-type name="QMapLibre" visible="false">
+        <object-type name="GLWidget">
+            <include file-name="pyqmaplibre_global.h" location="global"/>
+        </object-type>
+    </namespace-type>
+</typesystem>
