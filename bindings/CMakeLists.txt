@@ -71,11 +71,11 @@ target_link_libraries(${MODULE_NAME}
 	Qt6::Widgets
 	Qt6::OpenGLWidgets
 
-	${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/libQMapLibreWidgets.a
-	${CMAKE_BINARY_DIR}/maplibre-native-qt/src/core/libQMapLibre.a
-	${CMAKE_BINARY_DIR}/maplibre-native-qt/src/location/plugins/libqtgeoservices_maplibre.a
-	${CMAKE_BINARY_DIR}/maplibre-native-qt/src/location/libQMapLibreLocation.a
-	# ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/libQMapLibreWidgets.so
+	# ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/libQMapLibreWidgets.a
+	# ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/core/libQMapLibre.a
+	# ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/location/plugins/libqtgeoservices_maplibre.a
+	# ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/location/libQMapLibreLocation.a
+	${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/libQMapLibreWidgets.so
 )
 
 set_target_properties(${MODULE_NAME} PROPERTIES
