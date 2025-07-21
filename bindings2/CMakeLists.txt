@@ -101,8 +101,10 @@ pyside_config(--pyside-path pyside_path)
 pyside_config(--pyside-include-path pyside_include_dir 1)
 pyside_config(--python-include-path python_include_dir)
 pyside_config(--shiboken-generator-include-path shiboken_include_dir 1)
+# REMOVED BECAUSE OF EMPTY
 # pyside_config(--shiboken-module-shared-libraries-cmake shiboken_shared_libraries 0)
 pyside_config(--python-link-flags-cmake python_linking_data 0)
+# REMOVED BECAUSE OF EMPTY
 # pyside_config(--pyside-shared-libraries-cmake pyside_shared_libraries 0)
 
 set(shiboken_path "${shiboken_generator_path}/shiboken6${CMAKE_EXECUTABLE_SUFFIX}")
