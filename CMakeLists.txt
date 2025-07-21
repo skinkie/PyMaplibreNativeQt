@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 option(MLN_QT_WITH_LOCATION "Enable location support" OFF)
 option(MLN_QT_WITH_WIDGETS "Enable widgets" ON)
-option(MLN_QT_STATIC "Build as static library" ON)
+option(MLN_QT_STATIC "Build as static library" OFF)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/maplibre-native-qt/src/core/style ${CMAKE_CURRENT_SOURCE_DIR}/maplibre-native-qt/test/common/ ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets)
 

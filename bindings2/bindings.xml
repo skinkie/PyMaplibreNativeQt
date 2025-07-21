@@ -9,5 +9,6 @@
        <object-type name="GLWidget">
            <!-- <include file-name="bindings.h" location="global"/> -->
        </object-type>
+	       <!-- <object-type name="Settings"/> -->
     </namespace-type>
 </typesystem>

@@ -28,7 +28,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 # The wiggly library for which we will create bindings. You can change the name to something
 # relevant for your project.
-set(wiggly_library "libQMapLibreWidgets")
+set(wiggly_library "mlw")
 
 # The name of the generated bindings module (as imported in Python). You can change the name
 # to something relevant for your project.
@@ -102,10 +102,10 @@ pyside_config(--pyside-include-path pyside_include_dir 1)
 pyside_config(--python-include-path python_include_dir)
 pyside_config(--shiboken-generator-include-path shiboken_include_dir 1)
 # REMOVED BECAUSE OF EMPTY
-# pyside_config(--shiboken-module-shared-libraries-cmake shiboken_shared_libraries 0)
+pyside_config(--shiboken-module-shared-libraries-cmake shiboken_shared_libraries 0)
 pyside_config(--python-link-flags-cmake python_linking_data 0)
 # REMOVED BECAUSE OF EMPTY
-# pyside_config(--pyside-shared-libraries-cmake pyside_shared_libraries 0)
+pyside_config(--pyside-shared-libraries-cmake pyside_shared_libraries 0)
 
 set(shiboken_path "${shiboken_generator_path}/shiboken6${CMAKE_EXECUTABLE_SUFFIX}")
 if(NOT EXISTS ${shiboken_path})
@@ -161,13 +161,16 @@ endforeach()
 
 
 # Define the wiggly shared library for which we will create bindings.
-# set(${wiggly_library}_sources  wigglywidget.cpp)
-# add_library(${wiggly_library} SHARED ${${wiggly_library}_sources})
-# set_property(TARGET ${wiggly_library} PROPERTY PREFIX "")
+set(${wiggly_library}_sources ${CMAKE_SOURCE_DIR}/maplibre-native-qt/src/widgets/gl_widget.cpp)
+# ${CMAKE_SOURCE_DIR}/maplibre-native-qt/src/core/settings.cpp ${CMAKE_SOURCE_DIR}/maplibre-native-qt/src/core/types.cpp ${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/src/mbgl/util/tile_server_options.cpp ${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/src/mbgl/util/default_style.cpp ${CMAKE_SOURCE_DIR}/maplibre-native-qt/src/core/map.cpp ${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/src/mbgl/util/rapidjson.hpp
+# )
+
+add_library(${wiggly_library} SHARED ${${wiggly_library}_sources})
+set_property(TARGET ${wiggly_library} PROPERTY PREFIX "")
 
 # Needed mostly on Windows to export symbols, and create a .lib file, otherwise the binding
 # library can't link to the wiggly library.
-# target_compile_definitions(${wiggly_library} PRIVATE BINDINGS_BUILD)
+target_compile_definitions(${wiggly_library} PRIVATE BINDINGS_BUILD)
 
 
 # ====================== Shiboken target for generating binding C++ files  ====================
@@ -197,7 +200,7 @@ add_custom_command(OUTPUT ${generated_sources}
                     COMMAND ${shiboken_path}
                     ${shiboken_options} ${wrapped_header} ${typesystem_file}
                     DEPENDS ${generated_sources_dependencies}
-                    #IMPLICIT_DEPENDS CXX ${wrapped_header}
+                    IMPLICIT_DEPENDS CXX ${wrapped_header}
                     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
                     COMMENT "Running generator for ${typesystem_file}.")
 
@@ -211,29 +214,51 @@ set(${bindings_library}_sources ${generated_sources})
 # Define and build the bindings library.
 add_library(${bindings_library} SHARED ${${bindings_library}_sources})
 
+#  target_compile_definitions(${bindings_library} PRIVATE QMAPLIBRE_WIDGETS_LIBRARY)
 
 # Apply relevant include and link flags.
+target_include_directories(${wiggly_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/src/widgets)
+target_include_directories(${wiggly_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/src)
+target_include_directories(${wiggly_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/vendor/mapbox-base/deps/geometry.hpp/include)
+target_include_directories(${wiggly_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/vendor/mapbox-base/deps/variant/include)
+target_include_directories(${wiggly_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/include)
+target_include_directories(${wiggly_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/include)
+target_include_directories(${wiggly_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/src/core)
+target_include_directories(${wiggly_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/vendor/mapbox-base/include)
+target_include_directories(${wiggly_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/platform/qt/src)
+target_include_directories(${wiggly_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/vendor/mapbox-base/deps/geojson.hpp/include)
+target_include_directories(${wiggly_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/core/include)
+target_include_directories(${wiggly_library} PRIVATE ${CMAKE_BINARY_DIR}/6.9.1/gcc_64/include/QtOpenGLWidgets)
+target_include_directories(${wiggly_library} PRIVATE ${CMAKE_BINARY_DIR}/6.9.1/gcc_64/include/QtCore)
+target_include_directories(${wiggly_library} PRIVATE ${CMAKE_BINARY_DIR}/6.9.1/gcc_64/include)
+
 target_include_directories(${bindings_library} PRIVATE ${pyside_additional_includes})
 target_include_directories(${bindings_library} PRIVATE ${pyside_include_dir})
 target_include_directories(${bindings_library} PRIVATE ${pyside_include_dir}/QtCore)
 target_include_directories(${bindings_library} PRIVATE ${python_include_dir})
 target_include_directories(${bindings_library} PRIVATE ${shiboken_include_dir})
-target_include_directories(${bindings_library} PRIVATE /home/skinkie/Sources/widgetbinding/build/6.9.1/gcc_64/include/QtCore)
-target_include_directories(${bindings_library} PRIVATE /home/skinkie/Sources/widgetbinding/build/6.9.1/gcc_64/include)
+target_include_directories(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/6.9.1/gcc_64/include/QtCore)
+target_include_directories(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/6.9.1/gcc_64/include)
 target_include_directories(${bindings_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/src/widgets)
 target_include_directories(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/include)
 target_include_directories(${bindings_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/src/core)
 target_include_directories(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/core/include)
 
-# target_link_libraries(${wiggly_library} PRIVATE Qt6::Widgets)
+target_link_libraries(${wiggly_library} PRIVATE Qt6::Widgets)
+target_link_libraries(${wiggly_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/core/libQMapLibre.so)
 target_link_libraries(${bindings_library} PRIVATE Qt6::Widgets)
 target_link_libraries(${bindings_library} PRIVATE Qt6::OpenGLWidgets)
 target_link_directories(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets)
 # target_link_libraries(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/libQMapLibreWidgets.so)
-target_link_libraries(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/libQMapLibreWidgets.a)
-target_link_libraries(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/core/libQMapLibre.a)
 target_link_libraries(${bindings_library} PRIVATE ${pyside_shared_libraries})
 target_link_libraries(${bindings_library} PRIVATE ${shiboken_shared_libraries})
+target_link_libraries(${bindings_library} PRIVATE ${wiggly_library})
+# target_link_libraries(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/libQMapLibreWidgets.a)
+# target_link_libraries(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/core/libQMapLibre.a)
+
+set_target_properties(${bindings_library} PROPERTIES
+    BUILD_RPATH "$ORIGIN"
+)
 
 # Adjust the name of generated module.
 set_property(TARGET ${bindings_library} PROPERTY PREFIX "")
