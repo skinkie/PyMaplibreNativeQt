@@ -12,14 +12,13 @@ For obvious reasons, this is likely the best and prettiest way to render maps.
 
 There are some crazy things going on with respect to includes, ~~d QtOpenGLWidget~~
 The root CMakeLists.txt needs extra include dirs, without them the submodule does not compile.
-~~To me it does not make sense that the following line must be added to an unrelated header, but without it Shiboken6 complains.
+~~To me it does not make sense that the following line must be added to an unrelated header, but without it Shiboken6 complains.~~
 ```C
 extern Shiboken::Module::TypeInitStruct *SbkPySide6_QtOpenGLWidgetsTypeStructs;
 ```
-~~
-My CMakeLists.txt in bindings is very taylor made towards "fixing" random compilation failures.
+~~My CMakeLists.txt in bindings is very taylor made towards "fixing" random compilation failures.~~
 
-~~There are two lines commented out in `bindings2/CMakeLists.txt` which call `utils/pyside_config.py`, because it runs an empty result. ~~
+~~There are two lines commented out in `bindings2/CMakeLists.txt` which call `utils/pyside_config.py`, because it runs an empty result.~~
 
 The only way I could get this to work was to take the cpp file of the upstream repository in my CMakeLists.txt, and effectively compile the .so from there.
 Because I was not able to get the Settings to work (virtually everything of the upstream library must be imported) I changed the header not to have the Settings.
