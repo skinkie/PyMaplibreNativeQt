@@ -4,7 +4,7 @@ project(QMapLibreBindings LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-option(MLN_QT_WITH_LOCATION "Enable location support" ON)
+option(MLN_QT_WITH_LOCATION "Enable location support" OFF)
 option(MLN_QT_WITH_WIDGETS "Enable widgets" ON)
 option(MLN_QT_STATIC "Build as static library" ON)
 
@@ -14,4 +14,4 @@ add_subdirectory(maplibre-native-qt)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets OpenGLWidgets)
 
-add_subdirectory(bindings)
+add_subdirectory(bindings2)
