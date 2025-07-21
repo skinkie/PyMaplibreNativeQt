@@ -47,7 +47,9 @@ set(typesystem_file ${CMAKE_SOURCE_DIR}/bindings2/bindings.xml)
 # library.
 set(generated_sources
     ${CMAKE_CURRENT_BINARY_DIR}/${bindings_library}/${bindings_library}_module_wrapper.cpp
-    ${CMAKE_CURRENT_BINARY_DIR}/${bindings_library}/qmaplibre_glwidget_wrapper.cpp)
+    ${CMAKE_CURRENT_BINARY_DIR}/${bindings_library}/qmaplibre_glwidget_wrapper.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/${bindings_library}/qmaplibre_settings_wrapper.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/${bindings_library}/qmaplibre_map_wrapper.cpp)
 
 
 # ================================== Shiboken detection ======================================
@@ -245,16 +247,19 @@ target_include_directories(${bindings_library} PRIVATE ${CMAKE_SOURCE_DIR}/mapli
 target_include_directories(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/core/include)
 
 target_link_libraries(${wiggly_library} PRIVATE Qt6::Widgets)
-target_link_libraries(${wiggly_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/core/libQMapLibre.so)
+# target_link_libraries(${wiggly_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/core/libQMapLibre.so)
+# target_link_libraries(${wiggly_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/core/libQMapLibre.a)
+# target_link_libraries(${wiggly_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/libQMapLibreWidgets.a)
 target_link_libraries(${bindings_library} PRIVATE Qt6::Widgets)
 target_link_libraries(${bindings_library} PRIVATE Qt6::OpenGLWidgets)
 target_link_directories(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets)
 # target_link_libraries(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/libQMapLibreWidgets.so)
 target_link_libraries(${bindings_library} PRIVATE ${pyside_shared_libraries})
 target_link_libraries(${bindings_library} PRIVATE ${shiboken_shared_libraries})
-target_link_libraries(${bindings_library} PRIVATE ${wiggly_library})
+# target_link_libraries(${bindings_library} PRIVATE ${wiggly_library})
 # target_link_libraries(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/libQMapLibreWidgets.a)
 # target_link_libraries(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/core/libQMapLibre.a)
+target_link_libraries(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/libQMapLibreWidgets.so)
 
 set_target_properties(${bindings_library} PROPERTIES
     BUILD_RPATH "$ORIGIN"

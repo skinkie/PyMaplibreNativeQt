@@ -4,4 +4,6 @@
 #ifndef BINDINGS_H
 #define BINDINGS_H
 #include "gl_widget.hpp"
+#include "settings.hpp"
+#include "map.hpp"
 #endif // BINDINGS_H

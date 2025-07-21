@@ -8,7 +8,13 @@
     <namespace-type name="QMapLibre" visible="false">
        <object-type name="GLWidget">
            <!-- <include file-name="bindings.h" location="global"/> -->
-       </object-type>
-	       <!-- <object-type name="Settings"/> -->
+   </object-type>
+   <value-type name="Settings">
+	   <include file-name="settings.hpp" location="global"/>
+   </value-type>
+
+   <object-type name="Map">
+	   <include file-name="map.hpp" location="global"/>
+   </object-type>
     </namespace-type>
 </typesystem>
