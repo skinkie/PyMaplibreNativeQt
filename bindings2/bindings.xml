@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+// Copyright (C) 2020 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
+-->
+<typesystem package="pyqmaplibre">
+    <load-typesystem name="typesystem_openglwidgets.xml" generate="no"/>
+    <namespace-type name="QMapLibre" visible="false">
+       <object-type name="GLWidget">
+           <!-- <include file-name="bindings.h" location="global"/> -->
+       </object-type>
+    </namespace-type>
+</typesystem>
