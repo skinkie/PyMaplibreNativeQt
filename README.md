@@ -1,4 +1,4 @@
-# This repository DOES NOT work
+# This repository SORT OF works (very early demo)
 
 
 ## Aim
@@ -6,6 +6,7 @@
 I would like to be able to use the MapLibre Native Qt widget within PySide6.
 For obvious reasons, this is likely the best and prettiest way to render maps.
 
+![really from PySide6](http://stefan.konink.de/maplibre.png)
 
 ## State of affairs
 
@@ -18,9 +19,40 @@ extern Shiboken::Module::TypeInitStruct *SbkPySide6_QtOpenGLWidgetsTypeStructs;
 ~~
 My CMakeLists.txt in bindings is very taylor made towards "fixing" random compilation failures.
 
-There are two lines commented out in `bindings2/CMakeLists.txt` which call `utils/pyside_config.py`, because it runs an empty result. 
+~~There are two lines commented out in `bindings2/CMakeLists.txt` which call `utils/pyside_config.py`, because it runs an empty result. ~~
 
-How to reproduce the state I am at now on ArchLinux:
+The only way I could get this to work was to take the cpp file of the upstream repository in my CMakeLists.txt, and effectively compile the .so from there.
+Because I was not able to get the Settings to work (virtually everything of the upstream library must be imported) I changed the header not to have the Settings.
+
+```hpp
+    explicit GLWidget();
+    // explicit GLWidget(const Settings &);
+```
+
+...and changed the implementation to always come up with the same style, similar to the upstream example.
+This is obviously not what we want.
+
+```cpp
+GLWidget::GLWidget()
+    : d_ptr(std::make_unique<GLWidgetPrivate>(this, [] {
+        QMapLibre::Styles styles;
+        styles.emplace_back("https://demotiles.maplibre.org/style.json", "Demo Tiles");
+
+        QMapLibre::Settings settings;
+        settings.setStyles(styles);
+        settings.setDefaultZoom(5);
+        settings.setDefaultCoordinate(QMapLibre::Coordinate(43, 21));
+        return settings;
+    }())) {
+}
+```
+
+So the questions are:
+ 1. is it possible to just compile the libMapLibreWidgets.so, and link that while specifying which objects Shiboken6 needs to expose.
+ 2. must the object be rewritten (like a custom wrapper) so we can do the basic stuff like adding and setting styles in Python, or can we prevent this?
+
+
+##  How to reproduce the state I am at now on ArchLinux:
 
 
 ```
