@@ -3,7 +3,10 @@
 
 #ifndef BINDINGS_H
 #define BINDINGS_H
-#include "gl_widget.hpp"
-#include "settings.hpp"
-#include "map.hpp"
+#include <widgets/gl_widget.hpp>
+#include <core/types.hpp>
+#include <mbgl/style/style.hpp>
+#include <core/settings.hpp>
+#include <core/map.hpp>
+#include <mbgl/style/style.hpp>
 #endif // BINDINGS_H

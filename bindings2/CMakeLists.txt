@@ -49,6 +49,7 @@ set(generated_sources
     ${CMAKE_CURRENT_BINARY_DIR}/${bindings_library}/${bindings_library}_module_wrapper.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/${bindings_library}/qmaplibre_glwidget_wrapper.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/${bindings_library}/qmaplibre_settings_wrapper.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/${bindings_library}/qmaplibre_style_wrapper.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/${bindings_library}/qmaplibre_map_wrapper.cpp)
 
 
@@ -181,11 +182,17 @@ target_compile_definitions(${wiggly_library} PRIVATE BINDINGS_BUILD)
 # Set up the options to pass to shiboken.
 set(shiboken_options --generator-set=shiboken --enable-parent-ctor-heuristic
     --enable-pyside-extensions --enable-return-value-heuristic --use-isnull-as-nb_nonzero
-    --avoid-protected-hack --compiler=clang --debug-level=medium
+    --avoid-protected-hack --compiler=clang 
     ${INCLUDES}
     -I${CMAKE_SOURCE_DIR}
+    -I${CMAKE_SOURCE_DIR}/maplibre-native-qt/src
     -I${CMAKE_SOURCE_DIR}/maplibre-native-qt/src/widgets
     -I${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/include
+    -I${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/include/mbgl/style
+    -I${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/include
+    -I${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/vendor/mapbox-base/deps/geometry.hpp/include
+    -I${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/vendor/mapbox-base/deps/variant/include
+    -I${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/vendor/mapbox-base/include
     -I${CMAKE_SOURCE_DIR}/maplibre-native-qt/src/core
     -I${CMAKE_BINARY_DIR}/maplibre-native-qt/src/core/include
     -I${CMAKE_BINARY_DIR}/6.9.1/gcc_64/include/QtOpenGLWidgets
@@ -241,8 +248,14 @@ target_include_directories(${bindings_library} PRIVATE ${python_include_dir})
 target_include_directories(${bindings_library} PRIVATE ${shiboken_include_dir})
 target_include_directories(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/6.9.1/gcc_64/include/QtCore)
 target_include_directories(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/6.9.1/gcc_64/include)
+target_include_directories(${bindings_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/src)
 target_include_directories(${bindings_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/src/widgets)
 target_include_directories(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/include)
+target_include_directories(${bindings_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/include/mbgl/style)
+target_include_directories(${bindings_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/include)
+target_include_directories(${bindings_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/vendor/mapbox-base/deps/geometry.hpp/include)
+target_include_directories(${bindings_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/vendor/mapbox-base/deps/variant/include)
+target_include_directories(${bindings_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/vendor/maplibre-native/vendor/mapbox-base/include)
 target_include_directories(${bindings_library} PRIVATE ${CMAKE_SOURCE_DIR}/maplibre-native-qt/src/core)
 target_include_directories(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/core/include)
 

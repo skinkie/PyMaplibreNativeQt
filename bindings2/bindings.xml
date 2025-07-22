@@ -4,17 +4,44 @@
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
 -->
 <typesystem package="pyqmaplibre">
-    <load-typesystem name="typesystem_openglwidgets.xml" generate="no"/>
-    <namespace-type name="QMapLibre" visible="false">
+	<load-typesystem name="typesystem_core.xml" generate="no"/>
+	<load-typesystem name="typesystem_openglwidgets.xml" generate="no"/>
+	
+
+	<namespace-type name="QMapLibre" visible="false">
+
        <object-type name="GLWidget">
            <!-- <include file-name="bindings.h" location="global"/> -->
    </object-type>
+
+
+ <value-type name="Style">
+	   <include file-name="mbgl/style/style.hpp" location="global"/>
+   </value-type>
+
+
    <value-type name="Settings">
-	   <include file-name="settings.hpp" location="global"/>
+	   <include file-name="core/types.hpp" location="global"/>
+	   <include file-name="core/settings.hpp" location="global"/>
+	   <include file-name="mbgl/style/style.hpp" location="global"/>
+
+    		<!--
+	   <modify-function signature="setStyles(const QVector&lt;QMapLibre::Style&gt;&amp;)">
+	    <modify-argument index="1">
+		    <replace-type modified-type="list"/>
+	    </modify-argument>
+    </modify-function>-->
+
    </value-type>
 
    <object-type name="Map">
-	   <include file-name="map.hpp" location="global"/>
+	   <include file-name="core/map.hpp" location="global"/>
    </object-type>
+   
+   
+	   <!--<typedef-type name="Styles" source="QVector&lt;Style&gt;"/>-->
+	   <!-- <typedef-type name="Styles" source="QVector&lt;Style&gt;"/> -->
+	   <!--<typedef-type name="Coordinate" source="std::optional&lt;int&gt;"/> -->
+
     </namespace-type>
 </typesystem>
