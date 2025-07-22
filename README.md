@@ -28,8 +28,8 @@ extern Shiboken::Module::TypeInitStruct *SbkPySide6_QtOpenGLWidgetsTypeStructs;
     // explicit GLWidget(const Settings &);
 ```
 
-...and changed the implementation to always come up with the same style, similar to the upstream example.
-This is obviously not what we want.
+~~...and changed the implementation to always come up with the same style, similar to the upstream example.
+This is obviously not what we want.~~
 
 ```cpp
 GLWidget::GLWidget()
@@ -45,16 +45,16 @@ GLWidget::GLWidget()
     }())) {
 }
 ```
-
-Might need #include "types.hpp" in settings.hpp.
+(above not required anymore)
 
 So the questions are:
- 1. is it possible to just compile the libMapLibreWidgets.so, and link that while specifying which objects Shiboken6 needs to expose.
- 2. must the object be rewritten (like a custom wrapper) so we can do the basic stuff like adding and setting styles in Python, or can we prevent this?
-
+ 1. ~~is it possible to just compile the libMapLibreWidgets.so, and link that while specifying which objects Shiboken6 needs to expose.~~ _wrapper.cpp classes need to be added to the compilation.
+ 2. ~~must the object be rewritten (like a custom wrapper) so we can do the basic stuff like adding and setting styles in Python, or can we prevent this?~~ basic setup works
+ 3. https://github.com/maplibre/maplibre-native-qt/issues/221 seems to be an upstream bug.
 
 ##  How to reproduce the state I am at now on ArchLinux:
 
+Might need #include "types.hpp" in settings.hpp.
 
 ```
 pacman -S libxml2-legacy
