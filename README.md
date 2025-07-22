@@ -20,8 +20,8 @@ extern Shiboken::Module::TypeInitStruct *SbkPySide6_QtOpenGLWidgetsTypeStructs;
 
 ~~There are two lines commented out in `bindings2/CMakeLists.txt` which call `utils/pyside_config.py`, because it runs an empty result.~~
 
-The only way I could get this to work was to take the cpp file of the upstream repository in my CMakeLists.txt, and effectively compile the .so from there.
-Because I was not able to get the Settings to work (virtually everything of the upstream library must be imported) I changed the header not to have the Settings.
+~~The only way I could get this to work was to take the cpp file of the upstream repository in my CMakeLists.txt, and effectively compile the .so from there.~~
+~~Because I was not able to get the Settings to work (virtually everything of the upstream library must be imported) I changed the header not to have the Settings.~~
 
 ```hpp
     explicit GLWidget();
@@ -45,6 +45,8 @@ GLWidget::GLWidget()
     }())) {
 }
 ```
+
+Might need #include "types.hpp" in settings.hpp.
 
 So the questions are:
  1. is it possible to just compile the libMapLibreWidgets.so, and link that while specifying which objects Shiboken6 needs to expose.
