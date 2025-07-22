@@ -257,9 +257,13 @@ target_link_directories(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre
 target_link_libraries(${bindings_library} PRIVATE ${pyside_shared_libraries})
 target_link_libraries(${bindings_library} PRIVATE ${shiboken_shared_libraries})
 # target_link_libraries(${bindings_library} PRIVATE ${wiggly_library})
-# target_link_libraries(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/libQMapLibreWidgets.a)
-# target_link_libraries(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/core/libQMapLibre.a)
-target_link_libraries(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/libQMapLibreWidgets.so)
+target_link_libraries(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/libQMapLibreWidgets.a)
+target_link_libraries(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/core/libQMapLibre.a)
+target_link_libraries(${bindings_library} PRIVATE Qt6::Sql)
+target_link_libraries(${bindings_library} PRIVATE Qt6::Network)
+target_link_libraries(${bindings_library} PRIVATE Python3::Python)
+target_link_libraries(${bindings_library} PRIVATE ICU::uc)
+# target_link_libraries(${bindings_library} PRIVATE ${CMAKE_BINARY_DIR}/maplibre-native-qt/src/widgets/libQMapLibreWidgets.so)
 
 set_target_properties(${bindings_library} PROPERTIES
     BUILD_RPATH "$ORIGIN"
