@@ -79,3 +79,19 @@ cmake ..
 make
 ```
 
+## How to do the same on Windows
+Install MSVC, make sure that Cmake is also added.
+
+In cmd.exe:
+```
+"c:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
+aqt install-qt windows desktop 6.9.1 win64_msvc2022_64
+pip install pyside6 shiboken6
+mkdir build
+cmake .. -G "NMake Makefiles" -DCMAKE_PREFIX_PATH="C:\Users\Gebruiker\PycharmProjects\badger\6.9.1\msvc2022_64" -DCMAKE_BUILD_TYPE=Release
+nmake
+```
+
+Now you would have to collect all the missing dlls.
+I have used https://github.com/lucasg/Dependencies to track that down.
+
